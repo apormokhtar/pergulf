@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود به پرگلف</title>
+  <style>
+    @font-face {
+      font-family: 'IRANSansXFaNum';
+      src: url('fonts/IRANSansXFaNum-Regular.ttf') format('truetype');
+      font-weight: normal;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'IRANSansXFaNum',Tahoma,sans-serif; }
+    body {
+      background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .login-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      width: 480px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .login-card .logo { font-size: 48px; margin-bottom: 10px; }
+    .login-card h1 { font-size: 24px; color: #1E293B; margin-bottom: 5px; }
+    .login-card p { color: #64748B; font-size: 14px; margin-bottom: 25px; }
+    .login-card input, .login-card select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #E2E8F0;
+      border-radius: 12px;
+      font-size: 15px;
+      text-align: right;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+    .login-card input:focus, .login-card select:focus { border-color: #3B82F6; outline: none; }
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: #3B82F6;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn-login:hover { background: #2563EB; }
+    .link { color: #3B82F6; cursor: pointer; font-size: 13px; margin-top: 15px; display: block; }
+    .error-msg { color: #EF4444; font-size: 13px; margin-top: 10px; display: none; }
+    .success-msg { color: #10B981; font-size: 13px; margin-top: 10px; display: none; }
+    .hidden { display: none; }
+    .setup-box {
+      background: #FEF3C7;
+      border: 1px solid #F59E0B;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .setup-box p { color: #92400E; margin-bottom: 8px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="logo">🧾</div>
+    <h1>پرگلف</h1>
+    <p>نرم‌افزار حسابداری</p>
+
+    <!-- ==================== حالت تنظیم اولیه ==================== -->
+    <div id="setup-section" class="hidden">
+      <div class="setup-box">
+        <p>🔐 اولین بار اجرا – ثبت‌نام مدیر</p>
+      </div>
+      <input type="text" id="setup-name" placeholder="نام و نام خانوادگی مدیر">
+      <input type="text" id="setup-mobile" placeholder="شماره موبایل (برای بازیابی رمز)">
+      <select id="setup-security-question">
+        <option value="">-- سوال امنیتی را انتخاب کنید --</option>
+        <option value="pet">نام حیوان خانگی شما چیست؟</option>
+        <option value="city">شهر محل تولد شما؟</option>
+        <option value="friend">نام بهترین دوست شما؟</option>
+        <option value="car">اولین ماشین شما چه مدلی بود؟</option>
+      </select>
+      <input type="text" id="setup-security-answer" placeholder="پاسخ سوال امنیتی">
+      <input type="text" id="setup-shop-name" placeholder="نام مغازه / کسب و کار">
+      <input type="text" id="setup-shop-address" placeholder="آدرس مغازه">
+      <input type="text" id="setup-shop-phone" placeholder="تلفن مغازه">
+      <hr style="margin:15px 0; border-color:#E2E8F0;">
+      <input type="password" id="setup-password" placeholder="رمز عبور جدید">
+      <input type="password" id="setup-password-confirm" placeholder="تکرار رمز عبور">
+      <button class="btn-login" onclick="handleSetup()">💾 ثبت‌نام و ورود</button>
+    </div>
+
+    <!-- ==================== حالت ورود عادی ==================== -->
+    <div id="login-section">
+      <input type="password" id="login-password" placeholder="رمز عبور">
+      <button class="btn-login" onclick="handleLogin()">🔑 ورود</button>
+      <span class="link" onclick="showRecovery()">🔑 رمز عبور را فراموش کرده‌اید؟</span>
+    </div>
+
+    <!-- ==================== حالت بازیابی رمز ==================== -->
+    <div id="recovery-section" class="hidden">
+      <p style="font-weight:bold; margin-bottom:10px;">بازیابی رمز عبور</p>
+      <p style="font-size:13px; color:#64748B; margin-bottom:15px;">لطفاً شماره موبایل خود را وارد کنید:</p>
+      <input type="text" id="recovery-mobile" placeholder="شماره موبایل">
+      <button class="btn-login" onclick="checkRecoveryMobile()">📱 ادامه</button>
+
+      <div id="recovery-qa-section" class="hidden" style="margin-top:15px;">
+        <p id="recovery-question-text" style="font-weight:bold; margin-bottom:10px;"></p>
+        <input type="text" id="recovery-answer" placeholder="پاسخ خود را وارد کنید">
+        <button class="btn-login" onclick="verifyRecoveryAnswer()">✅ تأیید</button>
+      </div>
+
+      <div id="recovery-new-password-section" class="hidden" style="margin-top:15px;">
+        <input type="password" id="recovery-new-password" placeholder="رمز عبور جدید">
+        <input type="password" id="recovery-new-password-confirm" placeholder="تکرار رمز عبور">
+        <button class="btn-login" onclick="resetPassword()">💾 تغییر رمز</button>
+      </div>
+
+      <span class="link" onclick="showLogin()">🔙 بازگشت به ورود</span>
+    </div>
+
+    <p class="error-msg" id="error-msg"></p>
+    <p class="success-msg" id="success-msg"></p>
+  </div>
+
+  <script src="lib/crypto-helper.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>
