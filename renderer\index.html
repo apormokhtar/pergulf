@@ -1,1 +1,66 @@
 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حسابداری خلیج فارس</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h1>🧾 خلیج فارس</h1>
+        <p>نرم‌افزار حسابداری</p>
+      </div>
+      <div class="sidebar-nav">
+        <button class="sidebar-btn" data-page="dashboard">📊 داشبورد</button>
+
+        <button class="sidebar-btn group-toggle" data-group="persons">
+          <span>👥 اشخاص</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="submenu" data-group="persons">
+          <button class="sidebar-btn sub-item" data-page="person-new">➕ شخص جدید</button>
+          <button class="sidebar-btn sub-item" data-page="persons-list">👥 لیست اشخاص</button>
+        </div>
+
+        <button class="sidebar-btn group-toggle" data-group="goods">
+          <span>📦 کالاها و خدمات</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="submenu" data-group="goods">
+          <button class="sidebar-btn sub-item" data-page="goods-new">➕ کالای جدید</button>
+          <button class="sidebar-btn sub-item" data-page="goods-list">📋 لیست کالاها</button>
+        </div>
+
+        <button class="sidebar-btn group-toggle" data-group="sales">
+          <span>🛒 فروش و درآمد</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="submenu" data-group="sales">
+          <button class="sidebar-btn sub-item" data-page="sales-quick">⚡ فروش سریع</button>
+        </div>
+
+        <button class="sidebar-btn" data-page="settings">⚙️ تنظیمات</button>
+        
+        
+      </div>
+      <button class="sidebar-btn" id="logout-btn" style="color:#FCA5A5;">🚪 خروج</button>
+      <div class="sidebar-footer">پارس تک - مصطفی اکرادی</div>
+    </nav>
+
+    <main id="content"></main>
+  </div>
+
+  <!-- اسکریپت‌ها به ترتیب -->
+    <script src="lib/sql-asm.js"></script>
+    <script src="db.js"></script>
+    <script src="renderer.js"></script>
+    <script src="modules/accounting/script.js"></script>
+      <!-- اسکریپت‌های ماژول اشخاص (جدید) -->
+    <script src="modules/accounting/persons/new-script.js"></script>
+    <script src="modules/accounting/persons/list-script.js"></script>
+</body>
+</html>
